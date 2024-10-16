@@ -1,0 +1,39 @@
+<!-- SignUp form ends here -->
+<section>
+    <h2>SignUp Form</h2> 
+  <div class="form">
+    <form [formGroup]="registerationForm" (ngSubmit)="onSubmit()">
+      <div class="container">
+        <label>Name</label>
+        <input type="text" formControlName="name" required placeholder="Enter your name" autocomplete="name" class="ng-untouched ng-pristine ng-invalid"/>
+        <div style="height: 20px;  margin-bottom: 4px;">
+          @if (registerationForm.controls['name'].invalid && registerationForm.controls['name'].touched) {
+            <span style="color: #e03b3b; display: flex;">*Name is required.</span>
+          }
+        </div>
+      </div>
+      <div class="container">
+        <label>Email</label>
+        <input type="email" formControlName="email" required email placeholder="Enter your email" autocomplete="email" class="ng-untouched ng-pristine ng-invalid"/>
+        <div style="height: 20px;  margin-bottom: 4px;">
+          @if (registerationForm.controls['email'].invalid && registerationForm.controls['email'].touched) {
+            <span style="color: #e03b3b; display: flex;">*Email is required.</span>
+          }
+        </div>
+      </div>
+      <div class="container">
+        <label>Password</label>
+        <input type="password" formControlName="password" required placeholder="Enter your password"  autocomplete="current-password" class="ng-untouched ng-pristine ng-invalid"/>
+        <div style="height: 20px;  margin-bottom: 4px;">
+          @if (registerationForm.controls['password'].invalid && registerationForm.controls['password'].touched) {
+            <span style="color: #e03b3b; display: flex;">*Password is required.</span>
+          }
+        </div>
+      </div>
+      <div class="example-button-row">
+        <button type="submit">SignUp</button>
+      </div>
+    </form>
+  </div>
+  </section>
+  <!-- SignUp form ends here -->

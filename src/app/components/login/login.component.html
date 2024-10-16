@@ -1,0 +1,34 @@
+<!-- login form start here -->
+<section>
+    <h2>SignIn Form</h2> 
+  <div class="form">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="container">
+        <label>Email</label>
+        <input type="email" formControlName="email" required email placeholder="Enter your email" autocomplete="email" class="ng-untouched ng-pristine ng-invalid"/>
+        <div style="height: 20px; margin-bottom: 4px;">
+          @if (loginForm.controls['email'].invalid && loginForm.controls['email'].touched) {
+            <span style="color: #e03b3b; display: flex;">*Email is required.</span>
+          }
+        </div>
+      </div>
+      <div  class="container">
+        <label>Password</label>
+        <input type="password" formControlName="password" required placeholder="Enter your password" autocomplete="current-password" class="ng-untouched ng-pristine ng-invalid"/>
+        <div style="height: 20px;  margin-bottom: 4px;">
+          @if (loginForm.controls['password'].invalid && loginForm.controls['password'].touched) {
+            <span style="color: #e03b3b; display: flex;">*Password is required.</span>
+          }
+        </div>
+      </div>
+      <div class="example-button-row">
+        <button type="submit">SignIn</button>
+      </div>
+    </form>
+    <div class="divider">OR</div>
+    <div class="example-button-row">
+      <button [routerLink]="['/register']">SignUp</button>
+    </div>
+  </div>
+  </section>
+  <!-- login form ends here -->

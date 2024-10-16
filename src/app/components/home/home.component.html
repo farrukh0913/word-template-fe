@@ -1,0 +1,156 @@
+<!-- home section start here -->
+ 
+<section>
+  <div class="left-container">
+    <span>Chronologic</span>
+    <span>03.04.2024 - 32 ans</span>
+  </div>
+  <div class="right-container">
+    <div class="container">
+      <div><span>Doisser medical and Position(s) tarifaires</span></div>
+      <div>
+        <input type="text" placeholder="Research" />
+        <select>
+          <option>ALL</option>
+          <option value="Consultaion">Consultaion</option>
+          <option value="Medical">Medical</option>
+          <option value="SOAP">SOAP</option>
+        </select>
+        <select>
+          <option>De Plus recent</option>
+          <option value="Consultaion">Consultaion</option>
+          <option value="Medical">Medical</option>
+          <option value="SOAP">SOAP</option>
+        </select>
+        <input type="text" placeholder="Type O'acte" />
+      </div>
+    </div>
+    <div class="form">
+      <div class="form-header">
+        <div class="left-section">
+          <span>Doisser medical & Position(s) tarifaires</span>
+          <div class="button">
+          <button>commenter</button>
+          <button>documenter</button>
+        </div>
+        </div>
+        <div class="right-section">
+          <span style="margin-right: 3px">Gregory House</span>
+          <input type="text" placeholder="SansCodes" />
+          <div class="icons">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="add_box"
+          ></mat-icon>
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="save"
+          ></mat-icon>
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="assignment"
+            style="background: red"
+          ></mat-icon>
+        </div>
+        </div>
+      </div>
+      <div class="form-body">
+        <mat-tab-group animationDuration="0ms">
+          <mat-tab label="Doisser medical">
+            <div class="tab-content">
+              <form class="custom-form">
+                <div class="input-group">
+                  <div class="form-field">
+                    <label><span style="color: red">*</span>Type of ache</label>
+                    <select class="text-input">
+                      <option value="Consultaion">Consultaion</option>
+                      <option value="Medical">Medical</option>
+                      <option value="SOAP">SOAP</option>
+                    </select>
+                  </div>
+                  <div class="form-field">
+                    <label
+                      ><span style="color: red">*</span>Motif de
+                      consultation</label
+                    >
+                    <input type="text" class="text-input" placeholder="nom" />
+                  </div>
+                  <div class="form-field">
+                    <label
+                      ><span style="color: red">*</span>Type de
+                      consultation</label
+                    >
+                    <select class="text-input">
+                      <option value="SOAP">SOAP</option>
+                      <option value="Consultaion">Consultaion</option>
+                      <option value="Medical">Medical</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-field single-input">
+                  <label
+                    ><span style="color: red">*</span>Date de
+                    consultation</label
+                  >
+                  <input type="date" style="width: 31%" />
+                </div>
+                <div class="input-group">
+                  <div class="form-field">
+                    <label>Subjective</label>
+                    <textarea
+                      class="textaera-input"
+                      rows="5"
+                      placeholder="Entrez un subjectif"
+                    ></textarea>
+                  </div>
+                  <div class="form-field">
+                    <label>Objective</label>
+                    <textarea
+                      class="textaera-input"
+                      rows="5"
+                      placeholder="Entrez un objectif"
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="input-group">
+                  <div class="form-field">
+                    <label>Evaluation</label>
+                    <textarea
+                      class="textaera-input"
+                      rows="5"
+                      placeholder="Entrez un evaluation"
+                    ></textarea>
+                  </div>
+                  <div class="form-field">
+                    <label>Plan</label>
+                    <textarea
+                      class="textaera-input"
+                      rows="5"
+                      placeholder="Entrez le plan"
+                    ></textarea>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </mat-tab>
+          <mat-tab label="Position(s) tarifaires">
+            <div class="tab-content">Position(s) tarifaires</div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+      <div class="form-footer">
+        <div>
+          <button style="background: red">Suprimmer</button>
+        </div>
+        <div>
+          <button (click)="navigateToEditor()">Documnet</button>
+          <button class="documnet-btn">Document Modification</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- home section ends here -->
