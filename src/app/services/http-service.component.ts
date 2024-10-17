@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class HttpRequestService {
   constructor(private httpClient: HttpClient) {}
   readonly localUrl: string = 'http://localhost:3000/api/';
-  readonly baseUrl: string = 'https://gps-be.vercel.app/api/';
+  readonly baseUrl: string = 'https://word-template-be.vercel.app/api/';
 
   /**
    * get method
