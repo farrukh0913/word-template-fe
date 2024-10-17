@@ -56,7 +56,9 @@ export class TemplateComponent {
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.token = localStorage.getItem('jwtToken');
+      if (typeof window !== 'undefined') {
+        this.token = localStorage.getItem('jwtToken');
+      }
     }, 1000);
 
      this.httpRequestService.getRequest('getAllTemplate').subscribe({

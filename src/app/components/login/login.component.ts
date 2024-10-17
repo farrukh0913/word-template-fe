@@ -52,7 +52,9 @@ export class LoginComponent {
       this.httpRequestService.postRequest('login', payload).subscribe({
           next: (res) => {
             this.loginForm.reset();
-            localStorage.setItem("jwtToken", JSON.stringify(res.token));
+            if (typeof window !== 'undefined') {
+              localStorage.setItem("jwtToken", JSON.stringify(res.token));
+            }
             this.snackBar.open(res.message, '', {
               duration: 1000,
             });

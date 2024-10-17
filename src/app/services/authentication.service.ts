@@ -17,7 +17,9 @@ export class AuthenticationService {
     };
     this.httpRequestService.postRequest('login', payload).subscribe({
       next: (res) => {
-        localStorage.setItem("jwtToken", JSON.stringify(res.token));
+        if (typeof window !== 'undefined') {
+          localStorage.setItem("jwtToken", JSON.stringify(res.token));
+        }
       },
       error: async (err) => {
         this.snackBar.open(err.error.message, '', {
