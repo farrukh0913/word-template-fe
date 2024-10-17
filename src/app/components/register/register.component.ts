@@ -47,7 +47,7 @@ export class RegisterComponent {
         email: this.registerationForm.value.email,
         password: this.registerationForm.value.password,
       };
-      this.httpRequestService.postRequest('http://localhost:3000/api/signUp', payload).subscribe({
+      this.httpRequestService.postRequest('signUp', payload).subscribe({
           next: (res) => {
             this.snackBar.open(res.message, '', {
               duration: 1000,

@@ -32,7 +32,7 @@ export class TemplateComponent {
   onTxDocumentEditorLoaded() {
     TXTextControl.addEventListener("textControlLoaded", () => {
       if(this.selectedTemplate){
-        this.httpRequestService.getByIdRequest(`http://localhost:3000/api/getTemplateByName?templateName=${this.selectedTemplate}`).subscribe({
+        this.httpRequestService.getByIdRequest(`getTemplateByName?templateName=${this.selectedTemplate}`).subscribe({
             next: (res) => {
               TXTextControl.loadDocument(TXTextControl.StreamType.AdobePDF, res.template.templateContent);
             },
@@ -59,7 +59,7 @@ export class TemplateComponent {
       this.token = localStorage.getItem('jwtToken');
     }, 1000);
 
-     this.httpRequestService.getRequest('http://localhost:3000/api/getAllTemplate').subscribe({
+     this.httpRequestService.getRequest('getAllTemplate').subscribe({
       next: (res) => {
         this.templateNames = res.data.map((template: { templateName: string; }) => template.templateName);
       },
@@ -99,7 +99,7 @@ export class TemplateComponent {
           templateContent: e.data,
         };
         if (payload) {
-          this.httpRequestService.postRequest('http://localhost:3000/api/createTemplate', payload).subscribe({
+          this.httpRequestService.postRequest('createTemplate', payload).subscribe({
               next: (res) => {
                 this.snackBar.open(res.message, '', {
                   duration: 1000,
@@ -117,7 +117,7 @@ export class TemplateComponent {
   loadTemplate(event: Event) {
     const selectedOption = (event.target as HTMLSelectElement).value;
     if(selectedOption){
-    this.httpRequestService.getByIdRequest(`http://localhost:3000/api/getTemplateByName?templateName=${selectedOption}`).subscribe({
+    this.httpRequestService.getByIdRequest(`getTemplateByName?templateName=${selectedOption}`).subscribe({
         next: (res) => {
           TXTextControl.loadDocument(TXTextControl.StreamType.AdobePDF, res.template.templateContent);
         },

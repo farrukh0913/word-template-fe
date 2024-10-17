@@ -5,55 +5,58 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class HttpRequestService {  
+
+export class HttpRequestService {
   constructor(private httpClient: HttpClient) {}
+  readonly localUrl: string = 'http://localhost:3000/api/';
+  readonly baseUrl: string = 'https://gps-be.vercel.app/api/';
 
   /**
    * get method
-   * @param url api url
+   * @param endpoint api endpoint
    * @returns observable
    */
-  getRequest(url: string): Observable<any> {
-    return this.httpClient.get(url)
+  getRequest(endpoint: string): Observable<any> {
+    return this.httpClient.get(this.baseUrl + endpoint)
   }
 
   /**
    * get method by id
-   * @param url api url
+   * @param endpoint api endpoint
    * @returns observable
    */
-  getByIdRequest(url: string): Observable<any> {
-    return this.httpClient.get(url)
+  getByIdRequest(endpoint: string): Observable<any> {
+    return this.httpClient.get(this.baseUrl + endpoint)
   }
 
   /**
    * post method
-   * @param url api url
+   * @param endpoint api endpoint
    * @param payload payload as object
    * @returns observable
    */
-  postRequest(url: string, payload: any): Observable<any> {
-    return this.httpClient.post(url, payload)
+  postRequest(endpoint: string, payload: any): Observable<any> {
+    return this.httpClient.post(this.baseUrl + endpoint, payload)
   }
 
   /**
    * put method
-   * @param url api url
+   * @param endpoint api endpoint
    * @param payload payload as object
    * @returns observable
    */
-  updateRequest(url: string, payload: any): Observable<any> {
-    return this.httpClient.put(url, payload)
+  updateRequest(endpoint: string, payload: any): Observable<any> {
+    return this.httpClient.put(this.baseUrl + endpoint, payload)
   }
 
   /**
    * delete method
-   * @param url api url
+   * @param endpoint api endpoint
    * @param payload any payload
    * @returns observable
    */
-  deleteRequest(url: string): Observable<any> {
-    return this.httpClient.delete(url);
+  deleteRequest(endpoint: string): Observable<any> {
+    return this.httpClient.delete(this.baseUrl + endpoint);
   }
 
   // // Get a template by name

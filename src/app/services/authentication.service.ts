@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthenticationService {
 
   constructor(private httpRequestService: HttpRequestService, private snackBar: MatSnackBar,) { }
@@ -14,7 +15,7 @@ export class AuthenticationService {
       email: email,
       password: password,
     };
-    this.httpRequestService.postRequest('http://localhost:3000/api/login', payload).subscribe({
+    this.httpRequestService.postRequest('login', payload).subscribe({
       next: (res) => {
         localStorage.setItem("jwtToken", JSON.stringify(res.token));
       },

@@ -49,7 +49,7 @@ export class LoginComponent {
         email: this.loginForm.value.email,
         password: this.loginForm.value.password,
       };
-      this.httpRequestService.postRequest('http://localhost:3000/api/login', payload).subscribe({
+      this.httpRequestService.postRequest('login', payload).subscribe({
           next: (res) => {
             this.loginForm.reset();
             localStorage.setItem("jwtToken", JSON.stringify(res.token));
