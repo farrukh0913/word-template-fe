@@ -53,7 +53,7 @@ export class LoginComponent {
           next: (res) => {
             this.loginForm.reset();
             if (typeof window !== 'undefined') {
-              localStorage.setItem("jwtToken", JSON.stringify(res.token));
+              localStorage.setItem("jwtToken", JSON.stringify(res.data.token));
             }
             this.snackBar.open(res.message, '', {
               duration: 1000,

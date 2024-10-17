@@ -32,4 +32,9 @@ export class HomeComponent {
     });
   }
 
+  logOut(){
+    localStorage.clear();
+    this.router.navigateByUrl('/login');
+  }
+
 }

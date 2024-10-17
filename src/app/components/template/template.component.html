@@ -1,12 +1,13 @@
 @if(token){
   <section>
     <header class="header">
-      <button class="left-button">Encounters</button>
+      <img src="../../../assets/logo.jpg" alt="logo" [routerLink]="['/home']">
       <div class="right-container">
         <select class="select-tag" (change)="loadTemplate($event)">
           <option value="" disabled selected>Select template</option>
           <option *ngFor="let templateName of templateNames" [value]="templateName">{{ templateName }}</option>
         </select>
+        <button class="left-button">Encounters</button>
         <button class="right-button" mat-raised-button (click)="openDialog()">Save template</button>
         <button class="right-button" (click)="downloadDocument()">Download</button>
       </div>
@@ -18,4 +19,4 @@
       webSocketURL="wss://backend.textcontrol.com/TXWebSocket?access-token=BJfvrIyv7rrdECNxJfhM">
     </tx-document-editor>
     </section>
-}
+} @else { <div class="loader"></div> }

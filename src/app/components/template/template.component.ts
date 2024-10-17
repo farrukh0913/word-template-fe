@@ -1,6 +1,7 @@
 import { Component, HostListener, inject, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { DocumentEditorComponent, DocumentEditorModule } from '@txtextcontrol/tx-ng-document-editor';
 import {MatDialogModule, MatDialog} from '@angular/material/dialog';
 import { HttpRequestService } from '../../services/http-service.component';
@@ -14,7 +15,7 @@ declare const TXTextControl: any;
 @Component({
   selector: 'app-template',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatDialogModule, DocumentEditorModule],
+  imports: [CommonModule, FormsModule, RouterModule, MatDialogModule, DocumentEditorModule],
   templateUrl: './template.component.html',
   styleUrl: './template.component.scss',
 })
@@ -26,7 +27,7 @@ export class TemplateComponent {
   password: string = '';
   selectedTemplate: string = '';
   email: string = '';
-  token: string | null | undefined;
+  token: string = '';
 
   @HostListener('document:txDocumentEditorLoaded', ['$event'])
   onTxDocumentEditorLoaded() {
@@ -57,7 +58,7 @@ export class TemplateComponent {
   ngOnInit(): void {
     setTimeout(() => {
       if (typeof window !== 'undefined') {
-        this.token = localStorage.getItem('jwtToken');
+        this.token = localStorage.getItem('jwtToken') || '';
       }
     }, 1000);
 
