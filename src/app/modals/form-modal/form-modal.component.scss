@@ -1,17 +1,24 @@
-section{
+section {
   margin: auto;
 }
 
-mat-form-field{
-    width: 100%
+mat-form-field {
+  width: 100%;
 }
 
-.mat-mdc-form-field-infix{
-    padding: 0;
+.mat-mdc-form-field-infix {
+  padding: 0;
 }
-  
-  .dialog-actions {
-    display: flex;
-    justify-content: space-between;
-  }
-  
+
+.dialog-actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.mat-mdc-dialog-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 18px;
+}
