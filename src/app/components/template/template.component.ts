@@ -1,7 +1,7 @@
 import { Component, HostListener, inject, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { DocumentEditorComponent, DocumentEditorModule } from '@txtextcontrol/tx-ng-document-editor';
 import {MatDialogModule, MatDialog} from '@angular/material/dialog';
 import { HttpRequestService } from '../../services/http-service.component';
@@ -9,6 +9,7 @@ import { AddTemplateNameModalComponent } from '../../modals/add-template-name-mo
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
+import { FormModalComponent } from '../../modals/form-modal/form-modal.component';
 
 declare const TXTextControl: any;
 
@@ -28,6 +29,7 @@ export class TemplateComponent {
   selectedTemplate: string = '';
   email: string = '';
   token: string = '';
+  data: any;
 
   @HostListener('document:txDocumentEditorLoaded', ['$event'])
   onTxDocumentEditorLoaded() {
@@ -45,7 +47,7 @@ export class TemplateComponent {
     });
   }
 
-  constructor(private httpRequestService: HttpRequestService, private authenticationService:AuthenticationService, private route: ActivatedRoute, private snackBar: MatSnackBar, private dialog: MatDialog) {
+  constructor(private httpRequestService: HttpRequestService, private router: Router, private authenticationService:AuthenticationService, private route: ActivatedRoute, private snackBar: MatSnackBar, private dialog: MatDialog) {
     this.route.queryParams.subscribe(params => {
       this.user = decodeURIComponent(params['user']);
       this.email = decodeURIComponent(params['email']);
@@ -92,6 +94,48 @@ export class TemplateComponent {
 
     dialogRef.afterClosed().subscribe((result: string) => {
       this.saveTemplate(result)
+    });
+  }
+
+  openDialogModal(): void {
+    const dialogRef = this.dialog.open(FormModalComponent, {
+      width: '400px',
+      data: {userName: this.user, userPassword: this.password, userEmail: this.email, templateName: this.templateName}
+    });
+  
+    dialogRef.afterClosed().subscribe((result: string) => {
+      this.data =  result;
+      this.router.navigate(['/template'], {
+        queryParams: {
+          user: encodeURIComponent(this.data.userName),
+          email: encodeURIComponent(this.data.userEmail),
+          password: encodeURIComponent(this.data.userPassword),
+          templateName: encodeURIComponent(this.data.selectedTemplate),
+        }
+      });
+      this.httpRequestService.getByIdRequest(`getTemplateByName?templateName=${this.data.selectedTemplate}`).subscribe({
+        next: (res) => {
+          TXTextControl.loadDocument(TXTextControl.StreamType.AdobePDF, res.template.templateContent);
+        },
+        error: async (err) => {
+          console.log('Error fetching template:', err);
+        },
+      });
+    });
+  }
+
+  navigateToEditor(){
+    const user = 'user';
+    const email = 'user@gmail.com'
+    const password = 'user1';
+    const templateName = 'Certificate Template';
+    this.router.navigate(['/template'], {
+      queryParams: {
+        user: encodeURIComponent(user),
+        email: encodeURIComponent(email),
+        password: encodeURIComponent(password),
+        templateName: encodeURIComponent(templateName),
+      }
     });
   }
 

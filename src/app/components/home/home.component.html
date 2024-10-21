@@ -1,6 +1,11 @@
 <!-- home section start here -->
 <header class="header">
+  <div class="nav-elements">
   <img src="../../../assets/logo.jpg" alt="logo">
+  <span class="nav-element" [routerLink]="['/home']">Home</span>
+  <span class="nav-element" (click)="navigateToEditor()">Editor</span>
+  <span class="nav-element" (click)="openDialog()">Form</span>
+</div>
   <div class="header-btn">
     <button class="logOut-btn" (click)="logOut()"><i class="bi bi-box-arrow-left"></i></button>
   </div>

@@ -4,7 +4,10 @@ import { FormsModule } from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTabsModule} from '@angular/material/tabs';
+import { FormModalComponent } from '../../modals/form-modal/form-modal.component';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { HttpRequestService } from '../../services/http-service.component';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +18,32 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent {
 
-  constructor(private router: Router){}
+  user: string = '';
+  password: string = '';
+  email: string = '';
+  templateName: string = '';
+  data: any;
+
+  constructor(private router: Router, private dialog: MatDialog){ }
+
+openDialog(): void {
+  const dialogRef = this.dialog.open(FormModalComponent, {
+    width: '400px',
+    data: {userName: this.user, userPassword: this.password, userEmail: this.email, templateName: this.templateName}
+  });
+
+  dialogRef.afterClosed().subscribe((result: string) => {
+    this.data =  result;
+    this.router.navigate(['/template'], {
+      queryParams: {
+        user: encodeURIComponent(this.data.userName),
+        email: encodeURIComponent(this.data.userEmail),
+        password: encodeURIComponent(this.data.userPassword),
+        templateName: encodeURIComponent(this.data.selectedTemplate),
+      }
+    });
+  });
+}
 
   navigateToEditor(){
     const user = 'user';

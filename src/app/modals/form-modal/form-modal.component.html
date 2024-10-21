@@ -1,0 +1,35 @@
+<section>
+<h1 mat-dialog-title>Enter the Details</h1>
+<div mat-dialog-content>
+  <form>
+    <mat-form-field appearance="fill">
+      <mat-label>Username</mat-label>
+      <input matInput [(ngModel)]="data.userName" name="username" placeholder="Enter your username" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" [(ngModel)]="data.userPassword" name="password" placeholder="Enter your password" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" [(ngModel)]="data.userEmail" name="email" placeholder="Enter your email" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Templates Name</mat-label>
+      <mat-select [(ngModel)]="data.selectedTemplate" name="template">
+        <mat-option *ngFor="let templateName of templateNames" [value]="templateName">
+          {{templateName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+  <button mat-button mat-dialog-close>Cancel</button>
+</div>
+</section>
