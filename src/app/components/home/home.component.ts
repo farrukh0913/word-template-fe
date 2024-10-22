@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component} from '@angular/core';
+import { Component, EventEmitter, Output} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
@@ -8,6 +8,7 @@ import { FormModalComponent } from '../../modals/form-modal/form-modal.component
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpRequestService } from '../../services/http-service.component';
+import { DataTransferService } from '../../services/data-transfer.service';
 
 @Component({
   selector: 'app-home',
@@ -17,33 +18,45 @@ import { HttpRequestService } from '../../services/http-service.component';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-
   user: string = '';
   password: string = '';
   email: string = '';
   templateName: string = '';
   data: any;
+  firstName: string = '';
+  lastName: string = '';
 
-  constructor(private router: Router, private dialog: MatDialog){ }
+  constructor(private router: Router, private dataTransferService:DataTransferService, private dialog: MatDialog){ }
 
-openDialog(): void {
-  const dialogRef = this.dialog.open(FormModalComponent, {
-    width: '400px',
-    data: {userName: this.user, userPassword: this.password, userEmail: this.email, templateName: this.templateName}
-  });
+  sendData() {
+    const data = {
+      firstName: this.firstName,
+      lastName: this.lastName
+    }
+    this.dataTransferService.setData(data);
+    this.router.navigate(['/userTemplate'])
+  }
 
-  dialogRef.afterClosed().subscribe((result: string) => {
-    this.data =  result;
-    this.router.navigate(['/template'], {
-      queryParams: {
-        user: encodeURIComponent(this.data.userName),
-        email: encodeURIComponent(this.data.userEmail),
-        password: encodeURIComponent(this.data.userPassword),
-        templateName: encodeURIComponent(this.data.selectedTemplate),
-      }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(FormModalComponent, {
+      width: '400px',
+      data: {userName: this.user, userPassword: this.password, userEmail: this.email, templateName: this.templateName}
     });
-  });
-}
+  
+    dialogRef.afterClosed().subscribe((result: string) => {
+      this.data =  result;
+      if(this.data){
+      this.router.navigate(['/template'], {
+        queryParams: {
+          user: encodeURIComponent(this.data.userName),
+          email: encodeURIComponent(this.data.userEmail),
+          password: encodeURIComponent(this.data.userPassword),
+          templateName: encodeURIComponent(this.data.selectedTemplate),
+        }
+      });
+    }
+    });
+  }
 
   navigateToEditor(){
     const user = 'user';

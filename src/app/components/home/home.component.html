@@ -110,20 +110,12 @@
                 </div>
                 <div class="input-group">
                   <div class="form-field">
-                    <label>Subjective</label>
-                    <textarea
-                      class="textaera-input"
-                      rows="5"
-                      placeholder="Entrez un subjectif"
-                    ></textarea>
+                    <label>First Name</label>
+                    <input type="text" [(ngModel)]="firstName"  name="firstName" style="width:100%">
                   </div>
                   <div class="form-field">
-                    <label>Objective</label>
-                    <textarea
-                      class="textaera-input"
-                      rows="5"
-                      placeholder="Entrez un objectif"
-                    ></textarea>
+                    <label>Last Name</label>
+                    <input type="text" [(ngModel)]="lastName"  name="lastName" style="width:100%">
                   </div>
                 </div>
                 <div class="input-group">
@@ -157,8 +149,8 @@
           <button style="background: red">Suprimmer</button>
         </div>
         <div>
-          <button (click)="navigateToEditor()">Documnet</button>
-          <button class="documnet-btn">Document Modification</button>
+          <button>Documnet</button>
+          <button class="documnet-btn" (click)="sendData(); navigateToEditor()">Document Modification</button>
         </div>
       </div>
     </div>

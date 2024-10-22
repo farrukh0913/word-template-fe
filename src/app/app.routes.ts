@@ -3,7 +3,7 @@ import { AuthGuard } from './services/auth.guard';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
-import { TemplateComponent } from './components/template/template.component'
+import { TemplateComponent } from './components/template/template.component';
 
 export const routes: Routes = [
   {
