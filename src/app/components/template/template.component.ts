@@ -37,6 +37,7 @@ declare const TXTextControl: any;
   styleUrl: './template.component.scss',
 })
 export class TemplateComponent implements OnDestroy {
+  @ViewChild('documentEditor', { static: true }) documentEditor!: ElementRef;
   templateNames: [] = [];
   templateName: string = '';
   user: string = '';
@@ -75,9 +76,9 @@ export class TemplateComponent implements OnDestroy {
             <span class="person-info" style="font-weight: bold;">
                 [Madame Monsieur] ${this.patientFirstName || '[FirstName]'}
                  ${this.patientLastName || '[LasttName]' },
-                 [né le] ${this.patientDateOfBirth || '[Birth date]'} 
+                 [né le] ${this.patientDateOfBirth || '[Birth date]'}
             </span><br>
-            est en incapacité de 
+            est en incapacité de
         </p>
         <p class="additional-info" style="font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
             Je me tiens à disposition pour tout renseignement complémentaire, et vous prie de croire à l’expression de mes sentiments les meilleurs.
@@ -100,18 +101,17 @@ export class TemplateComponent implements OnDestroy {
       <p style="margin-bottom: 0;">Tel. 0123456789/tax</p>
       <p class="report-date" style="text-align: right; margin-bottom: 0;">Leisure: 07.03.2023</p>
       <hr>
-  
       <div class="report-date" style="text-align: right; margin-bottom: 0;">
           <p style="margin-bottom: 0;">${this.title || '[Title]'}</p>
           <p style="margin-bottom: 0;">${
             this.patientFirstName || '[FirstName]'
           } ${this.patientLastName || '[LastName]'}</p>
-          <p style="margin-bottom: 0;">${this.patientDateOfBirth || '[Birth date]'}</p> 
+          <p style="margin-bottom: 0;">${this.patientDateOfBirth || '[Birth date]'}</p>
           <p style="margin-bottom: 0;">[Address]</p>
           <p style="margin-bottom: 0;">[ZipCode][City]</p>
           <p style="margin-bottom: 0;">[Country]</p>
       </div>
-  
+
       <div class="container" style="display: flex; justify-content: flex-start; margin-bottom: 56px;">
           <span>Conc:</span>
           <div class="address" style="margin-left: 4px;">
@@ -120,26 +120,26 @@ export class TemplateComponent implements OnDestroy {
               079 000 00 00
           </div>
       </div>
-  
+
       <p class="report-title" style="margin-bottom: 12px;">Dear Dr.</p>
       <p style="margin-bottom: 0;">I did see the date of my surgery on the 03.04.2024</p>
-  
+
       <p class="events" style="font-weight: bold; margin-bottom: 6px; margin-top: 12px;">Reason of events</p>
-  
+
       <ul style="margin-bottom: 20px; padding-left: 0px">
           <li style="list-style-type: none; margin-bottom: 12px; margin-top: 12px; font-weight: bold;">Diagnosis:</li>
           <li style="list-style-type: none; margin-bottom: 12px; margin-top: 12px; font-weight: bold;">Anesthetic:</li>
           <li style="list-style-type: none; margin-bottom: 12px; margin-top: 12px; font-weight: bold;">Allergies:</li>
           <li style="list-style-type: none; margin-bottom: 12px; margin-top: 12px; font-weight: bold;">Subjective:</li>
       </ul>
-  
+
       <p>Dr Gregory House</p>
       <p>1234</p>
       <p>Gruds 10, 2023 Lesure</p>
       <p>Tel. 0123456789/tax</p>
       <p class="date" style="text-align: right; margin-bottom: 0;">Leisure: 07.03.2023</p>
       <hr>
-  
+
       <ul style="margin-bottom: 20px; padding-left: 0px">
           <li style="list-style-type: none; margin-bottom: 12px; margin-top: 12px; font-weight: bold;">Parameters:</li>
           <span>plots[]</span><br>
@@ -209,7 +209,7 @@ export class TemplateComponent implements OnDestroy {
       this.patientLastName = '[LastName]';
       this.patientDateOfBirth = '[Date of birth]';
     }
-   
+
     setTimeout(() => {
       if (typeof window !== 'undefined') {
         this.token = localStorage.getItem('jwtToken') || '';
@@ -359,6 +359,8 @@ export class TemplateComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    TXTextControl.removeFromDom();
+    if(typeof TXTextControl !== 'undefined'){
+      TXTextControl.removeFromDom();
+    }
   }
 }
