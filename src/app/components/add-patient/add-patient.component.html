@@ -1,0 +1,70 @@
+<!-- Patient form starts here-->
+<section>
+    <h2>Patient Form</h2>
+  <div class="form">
+      <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+        <div>
+          <label>First name</label>
+          <input type="text" formControlName="firstName" required placeholder="Enter your name"/>
+          <div style="height: 20px;">
+            @if (patientForm.controls['firstName'].invalid && patientForm.controls['firstName'].touched) {
+              <span style="color: #e03b3b; display: flex;">*First name is required.</span>
+            }
+          </div>
+        </div>
+        <div>
+          <label>Last name</label>
+          <input type="text" formControlName="lastName" required placeholder="Enter your lastName"/>
+          <div style="height: 20px;">
+            @if (patientForm.controls['lastName'].invalid && patientForm.controls['lastName'].touched) {
+              <span style="color: #e03b3b; display: flex;">*Last name is required.</span>
+            }
+          </div>
+        </div>
+        <div>
+            <label>Email</label>
+            <input type="email" formControlName="email" required placeholder="Enter your email"/>
+            <div style="height: 20px;">
+              @if (patientForm.controls['email'].invalid && patientForm.controls['email'].touched) {
+                <span style="color: #e03b3b; display: flex;">*Email is required.</span>
+              }
+            </div>
+          </div>
+        <div>
+          <label>Date of birth</label>
+          <input type="date" formControlName="dateOfBirth" required placeholder="Enter your date of birth"/>
+          <div style="height: 20px;">
+            @if (patientForm.controls['dateOfBirth'].invalid && patientForm.controls['dateOfBirth'].touched) {
+              <span style="color: #e03b3b; display: flex;">*Date of birth is required.</span>
+            }
+          </div>
+        </div>
+        <div>
+            <label>Phone Number</label>
+            <input type="number" formControlName="phoneNumber" required pattern="[0-9]+" placeholder="Enter your phone number"/>
+            <div style="height: 20px;">
+              @if (patientForm.controls['phoneNumber'].invalid && patientForm.controls['phoneNumber'].touched) {
+                <span style="color: #e03b3b; display: flex;">*Email is required.</span>
+              }
+            </div>
+        </div>
+        <div>
+            <label>Gender</label>
+            <input type="radio" id="male" formControlName="gender" value="Male">
+            <label style="margin-left: 4px;">Male</label>
+            <input type="radio" id="female" formControlName="gender" value="Female">
+            <label style="margin-left: 4px;">Female</label>
+            <div style="height: 20px;">
+              @if (patientForm.controls['gender'].invalid && patientForm.controls['gender'].touched) {
+                <span style="color: #e03b3b; display: flex;">*Gender is required.</span>
+              }
+            </div>
+        </div>
+        <div class="example-button-row">
+          @if(userId){<button type="submit" mat-flat-button>Update Patient Information</button>} @else{
+          <button type="submit" mat-flat-button>Submit Patient Information</button>}
+        </div>
+      </form>
+    </div>
+  </section>
+    <!-- Patient form ends here-->

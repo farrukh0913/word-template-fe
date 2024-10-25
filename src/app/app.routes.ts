@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { TemplateComponent } from './components/template/template.component';
+import { AddPatientComponent } from './components/add-patient/add-patient.component';
 
 export const routes: Routes = [
   {
@@ -28,5 +29,15 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     path: 'template',
     component: TemplateComponent,
+  },
+  {
+    canActivate: [AuthGuard],
+    path: 'addPatient',
+    component: AddPatientComponent,
+  },
+  {
+    canActivate: [AuthGuard],
+    path: "addPatient/:id",
+    component: AddPatientComponent
   },
 ];

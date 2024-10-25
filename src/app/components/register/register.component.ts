@@ -30,7 +30,10 @@ export class RegisterComponent {
 
   initializeForm() {
     this.registerationForm = new FormGroup({
-      name: new FormControl('', Validators.required),
+      firstName: new FormControl('', Validators.required),
+      lastName: new FormControl('', Validators.required),
+      signature: new FormControl('', Validators.required),
+      title: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),
     });
@@ -43,7 +46,10 @@ export class RegisterComponent {
   onSubmit() {
     if (this.registerationForm.valid) {
       const payload = {
-        name: this.registerationForm.value.name,
+        firstName: this.registerationForm.value.firstName,
+        lastName: this.registerationForm.value.lastName,
+        signature: this.registerationForm.value.signature,
+        title: this.registerationForm.value.title,
         email: this.registerationForm.value.email,
         password: this.registerationForm.value.password,
       };
@@ -64,7 +70,10 @@ export class RegisterComponent {
     }
   }
 
-  get name(){ return this.registerationForm.get('name')}
+  get firstName(){ return this.registerationForm.get('firstName')}
+  get lastName(){ return this.registerationForm.get('lastName')}
+  get signature(){ return this.registerationForm.get('signature')}
+  get title(){ return this.registerationForm.get('title')}
   get email(){ return this.registerationForm.get('email')}
   get password(){ return this.registerationForm.get('password')}
 }

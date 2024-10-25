@@ -1,4 +1,10 @@
-import { Component, HostListener, OnDestroy, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -31,14 +37,17 @@ declare const TXTextControl: any;
   styleUrl: './template.component.scss',
 })
 export class TemplateComponent implements OnDestroy {
-  @ViewChild('documentEditor', { static: false })
-  editor!: DocumentEditorComponent;
   templateNames: [] = [];
   templateName: string = '';
   user: string = '';
   password: string = '';
-  selectedTemplate: string = '';
   email: string = '';
+  title: string = '';
+  signature: string = '';
+  selectedTemplate: string = '';
+  patientFirstName: string = '';
+  patientLastName: string = '';
+  patientDateOfBirth: string = '';
   token: string = '';
   data: any;
   receivedData: any;
@@ -47,7 +56,11 @@ export class TemplateComponent implements OnDestroy {
   onTxDocumentEditorLoaded() {
     TXTextControl.addEventListener('textControlLoaded', () => {
       if (this.selectedTemplate) {
-        this.httpRequestService.getByIdRequest(`getTemplateByName?templateName=${this.selectedTemplate}`).subscribe({
+        this.httpRequestService
+          .getByIdRequest(
+            `getTemplateByName?templateName=${this.selectedTemplate}`
+          )
+          .subscribe({
             next: (res) => {
               const logoPath = '../../../assets/logo-2.png';
               // TXTextControl.loadDocument(TXTextControl.StreamType.AdobePDF, res.template.templateContent);
@@ -60,7 +73,9 @@ export class TemplateComponent implements OnDestroy {
         <p class="declaration" style="font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
             Le médecin soussigné déclare qu’en raison de son état de santé<br>
             <span class="person-info" style="font-weight: bold;">
-                [Madame Monsieur] ${this.receivedData.firstName} ${this.receivedData.lastName}, [né le] [Birth date]
+                [Madame Monsieur] ${this.patientFirstName || '[FirstName]'}
+                 ${this.patientLastName || '[LasttName]' },
+                 [né le] ${this.patientDateOfBirth || '[Birth date]'} 
             </span><br>
             est en incapacité de 
         </p>
@@ -70,6 +85,7 @@ export class TemplateComponent implements OnDestroy {
         <p class="date" style="font-size: 16px; margin-bottom: 50px;">
             Lausanne, le [Date actuelle en long]
         </p>
+        <p>${this.signature || ''}</p>
         <p class="signature" style="font-size: 18px;">
             Professeur Pierre Michetti
         </p>
@@ -77,66 +93,62 @@ export class TemplateComponent implements OnDestroy {
 `;
 
               const html = `<div id="content" class="report" style="width: 80%; margin: 0 auto; margin-top: 14px; padding: 34px; background-color: #fff; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
-    <img class="logo" src=${logoPath} alt="logo" style="margin-bottom: 24px;">
-    <p style="margin-bottom: 0;">Dr Gregory House</p>
-    <p style="margin-bottom: 0;">1234</p>
-    <p style="margin-bottom: 0;">Gruds 10, 2023 Lesure</p>
-    <p style="margin-bottom: 0;">Tel. 0123456789/tax</p>
-    <p class="report-date" style="text-align: right; margin-bottom: 0;">Leisure: 07.03.2023</p>
-    <hr>
-
-    <div class="report-date" style="text-align: right; margin-bottom: 0;">
-        <p style="margin-bottom: 0;">[Title]</p>
-        <p style="margin-bottom: 0;">${this.receivedData.firstName} ${this.receivedData.lastName}</p>
-        <p style="margin-bottom: 0;">[Address]</p>
-        <p style="margin-bottom: 0;">[ZipCode][City]</p>
-        <p style="margin-bottom: 0;">[Country]</p>
-    </div>
-
-    <div class="container" style="display: flex; justify-content: flex-start; margin-bottom: 56px;">
-        <span>Conc:</span>
-        <div class="address" style="margin-left: 4px;">
-            Frau Albert Levert geb am 08.30.2024 <br>
-            Grand rue 14, 2023, lausanne,<br>
-            079 000 00 00
-        </div>
-    </div>
-
-    <p class="report-title" style="margin-bottom: 12px;">Dear Dr.</p>
-    <p style="margin-bottom: 0;">I did see the date of my surgery on the 03.04.2024</p>
-
-    <p class="events" style="font-weight: bold; margin-bottom: 6px; margin-top: 12px;">Reason of events</p>
-
-    <ul style="margin-bottom: 20px;">
-        <li style="list-style-type: none; margin-bottom: 12px; margin-top: 12px; font-weight: bold;">Diagnosis:</li>
-        <span>[]</span>
-        <li style="list-style-type: none; margin-bottom: 12px; margin-top: 12px; font-weight: bold;">Anesthetic:</li>
-        <span>[]</span>
-        <li style="list-style-type: none; margin-bottom: 12px; margin-top: 12px; font-weight: bold;">Allergies:</li>
-        <span>[]</span>
-        <li style="list-style-type: none; margin-bottom: 12px; margin-top: 12px; font-weight: bold;">Subjective:</li>
-        <span>[]</span>
-    </ul>
-
-    <img class="logo page" style="margin-top:70px; margin-bottom: 24px;" src="../../../assets/logo-2.png" alt="logo">
-    <p>Dr Gregory House</p>
-    <p>1234</p>
-    <p>Gruds 10, 2023 Lesure</p>
-    <p>Tel. 0123456789/tax</p>
-    <p class="date" style="margin-bottom: 0;">Leisure: 07.03.2023</p>
-    <hr>
-
-    <ul style="margin-bottom: 20px;">
-        <li style="list-style-type: none; margin-bottom: 12px; margin-top: 12px; font-weight: bold;">Parameters:</li>
-        <span>plots[]</span><br>
-        <span>plots[]</span>
-        <li style="list-style-type: none; margin-bottom: 12px; margin-top: 12px; font-weight: bold;">Plan:</li>
-        <span>[]</span>
-        <li style="list-style-type: none; margin-bottom: 12px; margin-top: 12px; font-weight: bold;">Assesment:</li>
-        <span>[]</span>
-    </ul>
-</div>`;
-              if (this.selectedTemplate === 'Certificate Template') {
+      <img class="logo" src=${logoPath} alt="logo" style="margin-bottom: 24px;">
+      <p style="margin-bottom: 0;">Dr Gregory House</p>
+      <p style="margin-bottom: 0;">1234</p>
+      <p style="margin-bottom: 0;">Gruds 10, 2023 Lesure</p>
+      <p style="margin-bottom: 0;">Tel. 0123456789/tax</p>
+      <p class="report-date" style="text-align: right; margin-bottom: 0;">Leisure: 07.03.2023</p>
+      <hr>
+  
+      <div class="report-date" style="text-align: right; margin-bottom: 0;">
+          <p style="margin-bottom: 0;">${this.title || '[Title]'}</p>
+          <p style="margin-bottom: 0;">${
+            this.patientFirstName || '[FirstName]'
+          } ${this.patientLastName || '[LastName]'}</p>
+          <p style="margin-bottom: 0;">${this.patientDateOfBirth || '[Birth date]'}</p> 
+          <p style="margin-bottom: 0;">[Address]</p>
+          <p style="margin-bottom: 0;">[ZipCode][City]</p>
+          <p style="margin-bottom: 0;">[Country]</p>
+      </div>
+  
+      <div class="container" style="display: flex; justify-content: flex-start; margin-bottom: 56px;">
+          <span>Conc:</span>
+          <div class="address" style="margin-left: 4px;">
+              Frau Albert Levert geb am 08.30.2024 <br>
+              Grand rue 14, 2023, lausanne,<br>
+              079 000 00 00
+          </div>
+      </div>
+  
+      <p class="report-title" style="margin-bottom: 12px;">Dear Dr.</p>
+      <p style="margin-bottom: 0;">I did see the date of my surgery on the 03.04.2024</p>
+  
+      <p class="events" style="font-weight: bold; margin-bottom: 6px; margin-top: 12px;">Reason of events</p>
+  
+      <ul style="margin-bottom: 20px; padding-left: 0px">
+          <li style="list-style-type: none; margin-bottom: 12px; margin-top: 12px; font-weight: bold;">Diagnosis:</li>
+          <li style="list-style-type: none; margin-bottom: 12px; margin-top: 12px; font-weight: bold;">Anesthetic:</li>
+          <li style="list-style-type: none; margin-bottom: 12px; margin-top: 12px; font-weight: bold;">Allergies:</li>
+          <li style="list-style-type: none; margin-bottom: 12px; margin-top: 12px; font-weight: bold;">Subjective:</li>
+      </ul>
+  
+      <p>Dr Gregory House</p>
+      <p>1234</p>
+      <p>Gruds 10, 2023 Lesure</p>
+      <p>Tel. 0123456789/tax</p>
+      <p class="date" style="text-align: right; margin-bottom: 0;">Leisure: 07.03.2023</p>
+      <hr>
+  
+      <ul style="margin-bottom: 20px; padding-left: 0px">
+          <li style="list-style-type: none; margin-bottom: 12px; margin-top: 12px; font-weight: bold;">Parameters:</li>
+          <span>plots[]</span><br>
+          <span>plots[]</span>
+          <li style="list-style-type: none; margin-bottom: 12px; margin-top: 12px; font-weight: bold;">Plan:</li>
+          <li style="list-style-type: none; margin-bottom: 12px; margin-top: 12px; font-weight: bold;">Assesment:</li>
+      </ul>
+  </div>`;
+              if (this.selectedTemplate === 'Certificate') {
                 TXTextControl.loadDocument(
                   TXTextControl.StreamType.HTMLFormat,
                   this.toBase64(htmlContent)
@@ -167,10 +179,15 @@ export class TemplateComponent implements OnDestroy {
   ) {
     this.receivedData = this.dataTransferService.getData();
     this.route.queryParams.subscribe((params) => {
-      this.user = decodeURIComponent(params['user']);
-      this.email = decodeURIComponent(params['email']);
-      this.password = decodeURIComponent(params['password']);
+      this.user = decodeURIComponent(params['userFirstName'] + params['userLastName']);
+      this.email = decodeURIComponent(params['userEmail']);
+      this.password = decodeURIComponent(params['userPassword']);
+      this.title = decodeURIComponent(params['userTitle']);
+      this.signature = decodeURIComponent(params['userSignature']);
       this.selectedTemplate = decodeURIComponent(params['templateName']);
+      this.patientFirstName = decodeURIComponent(params['patientFirstName']);
+      this.patientLastName = decodeURIComponent(params['patientLastName']);
+      this.patientDateOfBirth = decodeURIComponent(params['patientDateOfBirth']);
     });
     if (this.email) {
       this.authenticationService.login(this.email, this.password);
@@ -178,12 +195,26 @@ export class TemplateComponent implements OnDestroy {
   }
 
   ngOnInit(): void {
+    if(this.patientFirstName == 'undefined'){
+      if(this.receivedData){
+        this.patientFirstName = this.receivedData?.firstName;
+        this.patientLastName = this.receivedData?.lastName;
+        this.patientDateOfBirth = this.receivedData?.dateOfBirth;
+      }
+    }
+    if(this.user == 'NaN'){
+      this.title = '[Tilte]';
+      this.signature = '';
+      this.patientFirstName = '[FirstName]';
+      this.patientLastName = '[LastName]';
+      this.patientDateOfBirth = '[Date of birth]';
+    }
+   
     setTimeout(() => {
       if (typeof window !== 'undefined') {
         this.token = localStorage.getItem('jwtToken') || '';
       }
     }, 1000);
-
     this.httpRequestService.getRequest('getAllTemplate').subscribe({
       next: (res) => {
         this.templateNames = res.data.map(
@@ -271,7 +302,7 @@ export class TemplateComponent implements OnDestroy {
     const user = 'user';
     const email = 'user@gmail.com';
     const password = 'user1';
-    const templateName = 'Certificate Template';
+    const templateName = 'Certificate';
     this.router.navigate(['/template'], {
       queryParams: {
         user: encodeURIComponent(user),
@@ -328,8 +359,6 @@ export class TemplateComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // if (TXTextControl) {
-    //   console.log('textcontrol', TXTextControl);
-    // }
+    TXTextControl.removeFromDom();
   }
 }

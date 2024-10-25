@@ -11,9 +11,7 @@ export class DataTransferService {
   }
 
   setData(data: any) {
-    console.log('dataa', data);
     this.data = data;
-    console.log('incoming data', this.data);
   }
   getData(): any {
     return this.data;

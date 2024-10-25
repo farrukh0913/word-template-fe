@@ -54,6 +54,7 @@ export class LoginComponent {
             this.loginForm.reset();
             if (typeof window !== 'undefined') {
               localStorage.setItem("jwtToken", JSON.stringify(res.data.token));
+              localStorage.setItem("userProfile", JSON.stringify(res.data));
             }
             this.snackBar.open(res.message, '', {
               duration: 1000,

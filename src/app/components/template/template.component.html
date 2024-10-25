@@ -1,21 +1,12 @@
 @if(token){
   <section>
     <header class="header">
-      <div class="nav-elements">
-      <img src="../../../assets/logo.jpg" alt="logo" [routerLink]="['/home']">
-      <span class="nav-element" [routerLink]="['/home']">Home</span>
-      <span class="nav-element" (click)="navigateToEditor()">Editor</span>
-      <span class="nav-element" (click)="openDialogModal()">Form</span>
-    </div>
-      <div class="right-container">
         <select class="select-tag" (change)="loadTemplate($event)">
-          <option value="" disabled selected>Select template</option>
+          <option value="" disabled selected>Select templat</option>
           <option *ngFor="let templateName of templateNames" [value]="templateName">{{ templateName }}</option>
         </select>
-        <button class="left-button">Encounters</button>
         <button class="right-button" mat-raised-button (click)="openDialog()">Save template</button>
         <button class="right-button" (click)="downloadDocument()">Download</button>
-      </div>
     </header>
     <tx-document-editor
       #documentEditor

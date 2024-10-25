@@ -22,3 +22,8 @@ mat-form-field {
   align-items: center;
   padding-left: 18px;
 }
+
+.mat-mdc-button:not(:disabled){
+  background: #0056b3;
+  color: white;
+}

@@ -3,7 +3,6 @@
   <div class="nav-elements">
   <img src="../../../assets/logo.jpg" alt="logo">
   <span class="nav-element" [routerLink]="['/home']">Home</span>
-  <span class="nav-element" (click)="navigateToEditor()">Editor</span>
   <span class="nav-element" (click)="openDialog()">Form</span>
 </div>
   <div class="header-btn">
@@ -106,7 +105,7 @@
                     ><span style="color: red">*</span>Date de
                     consultation</label
                   >
-                  <input type="date" style="width: 31%" />
+                  <input type="date" style="width: 31%" [(ngModel)]="dateOfBirth"  name="dateOfBirth"/>
                 </div>
                 <div class="input-group">
                   <div class="form-field">
@@ -155,5 +154,60 @@
       </div>
     </div>
   </div>
+</section>
+
+<section style="display: flex; flex-direction: column;">
+<div class="patient">
+<span>Patients</span>
+<button [routerLink]="['/addPatient']"><i class="bi bi-plus"></i> Add new patient</button>
+</div>
+<div>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+    <!--Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{element.firstName}} {{element.lastName}}</td>
+    </ng-container>
+  
+    <!-- Date of birth Column -->
+    <ng-container matColumnDef="dateOfBirth">
+      <th mat-header-cell *matHeaderCellDef>Date of birth</th>
+      <td mat-cell *matCellDef="let element">{{element.dateOfBirth}}</td>
+    </ng-container>
+  
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let element">{{element.email}}</td>
+    </ng-container>
+  
+    <!-- Phone Number Column -->
+    <ng-container matColumnDef="phoneNumber">
+      <th mat-header-cell *matHeaderCellDef>Telephone</th>
+      <td mat-cell *matCellDef="let element">{{element.phoneNumber}}</td>
+    </ng-container>
+  
+    <!-- Gender Column -->
+    <ng-container matColumnDef="gender">
+      <th mat-header-cell *matHeaderCellDef>Gender</th>
+      <td mat-cell *matCellDef="let element">{{element.gender}}</td>
+    </ng-container>
+  
+     <!-- Action Column -->
+     <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let element">
+        <div class="action-buttons">
+        <mat-icon (click)="editUser(element._id)">edit</mat-icon>
+        <mat-icon (click)="deleteUser(element._id)">delete</mat-icon>
+        <button style="padding: 2px 4px;" (click)="openDocument(element.firstName, element.lastName, element.dateOfBirth)">Open</button>
+      </div>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
 </section>
 <!-- home section ends here -->
